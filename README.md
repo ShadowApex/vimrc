@@ -3,6 +3,7 @@
 # Setup
 
 ## Link config
+ mkdir ~/.config/nvim
 `ln -s ~/git/vimrc/.vimrc ~/.config/nvim/init.vim`    
 `ln -s ~/git/vimrc/.vimrc ~/`    
 

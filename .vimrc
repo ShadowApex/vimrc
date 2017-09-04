@@ -97,6 +97,10 @@ set number
 set hlsearch
 highlight Search cterm=NONE ctermfg=white ctermbg=blue
 
+" Column Color Settings
+set colorcolumn=80
+highlight ColorColumn ctermfg=black ctermbg=red 
+
 " more subtle popup colors 
 if has ('gui_running')
     highlight Pmenu guibg=#cccccc gui=bold    
@@ -121,6 +125,7 @@ nnoremap <F3> :below 10sp term://$SHELL<cr>i
 " NeoVim Python
 let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
+
 
 " Python-mode
 " Activate rope
