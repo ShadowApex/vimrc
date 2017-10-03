@@ -21,7 +21,7 @@
 * Clone the vimrc repository    
 `git clone https://github.com/ShadowApex/vimrc ~/Projects/vimrc`    
 
-* Link our vimrc to the appropriate locations
+* Link our vimrc to the appropriate locations    
 `mkdir -p ~/.config/nvim`    
 `ln -s ~/Projects/vimrc/.vimrc ~/.vimrc`    
 `ln -s ~/Projects/vimrc/.vimrc ~/.config/nvim/init.vim`    
