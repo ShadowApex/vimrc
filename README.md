@@ -42,3 +42,41 @@
 `echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bashrc`    
 `echo 'export PATH="$PATH:/usr/local/go/bin"' >> ~/.bashrc`    
 `vim +GoInstallBinaries +qall`    
+
+### Mac OS X
+
+* Install Brew    
+`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`    
+
+* Install NeoVim and dependencies    
+`brew install neovim curl python python3 git flake8 ag grip`    
+`sudo pip install -U neovim`    
+`sudo pip3 install -U neovim`    
+
+* Create a command alias for vim    
+`echo "alias vim='nvim'" >> ~/.bashrc`    
+
+* Clone the vimrc repository    
+`git clone https://github.com/ShadowApex/vimrc ~/Projects/vimrc`    
+
+* Link our vimrc to the appropriate locations    
+`mkdir -p ~/.config/nvim`    
+`ln -s ~/Projects/vimrc/.vimrc ~/.vimrc`    
+`ln -s ~/Projects/vimrc/.vimrc ~/.config/nvim/init.vim`    
+
+* Install plugin manager    
+`curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`    
+`mkdir -p ~/.local/share/nvim/site/autoload`    
+`ln -s ~/.vim/autoload/plug.vim ~/.local/share/nvim/site/autoload/plug.vim`    
+
+* Install Plugins    
+`vim +PlugInstall +qall`    
+`vim +VimEnter +UpdateRemotePlugins +qall`    
+
+* (Optional) Install Go support    
+`brew install golang`    
+`echo "# GOPATH" >> ~/.bashrc"`    
+`echo 'export GOPATH="$HOME/Projects/go"' >> ~/.bashrc`    
+`echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bashrc`    
+`echo 'export PATH="$PATH:/usr/local/go/bin"' >> ~/.bashrc`    
+`vim +GoInstallBinaries +qall`    
