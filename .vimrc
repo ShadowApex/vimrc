@@ -23,6 +23,7 @@ filetype plugin on
         Plug 'numkil/ag.nvim'
         Plug 'vim-scripts/visual-increment'
         Plug 'raimondi/delimitmate'
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         " Golang
         Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
         Plug 'zchee/deoplete-go', { 'do': 'make'}
@@ -283,6 +284,9 @@ filetype plugin on
 " Keybindings {
     " Map leader to space
     let mapleader = "\\"
+
+    " Map Ag search to Ctrl+f
+    nnoremap <C-f> :Ag 
 
     " Enter visual mode with space,space 
     nnoremap <Leader><Leader> V
