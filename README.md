@@ -43,6 +43,9 @@
 `echo 'export PATH="$PATH:/usr/local/go/bin"' >> ~/.bashrc`    
 `vim +GoInstallBinaries +qall`    
 
+* (Optional) Install C/C++ support    
+`sudo apt install clang libclang1 libclang-4.0-dev`
+
 ### Mac OS X
 
 * Install Brew    
@@ -80,3 +83,6 @@
 `echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bashrc`    
 `echo 'export PATH="$PATH:/usr/local/go/bin"' >> ~/.bashrc`    
 `vim +GoInstallBinaries +qall`    
+
+* (Optional) Install C/C++ support    
+`brew install llvm --with-clang`

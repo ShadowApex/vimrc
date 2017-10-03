@@ -2,6 +2,12 @@
 
 filetype plugin on
 
+" Identify platform {
+    let g:MAC = has('macunix')
+    let g:LINUX = has('unix') && !has('macunix') && !has('win32unix')
+    let g:WINDOWS = has('win32') || has('win64')
+" }
+
 " Load plugins {
     call plug#begin('~/.vim/plugged')
         " Colors    
@@ -30,6 +36,9 @@ filetype plugin on
         " Rust
         Plug 'rust-lang/rust.vim'
         Plug 'sebastianmarkow/deoplete-rust'
+        " C/C++
+        Plug 'zchee/deoplete-clang'
+        Plug 'Shougo/neoinclude.vim'
         " openCL
         Plug 'petRUShka/vim-opencl'
         " erlang
@@ -222,6 +231,13 @@ filetype plugin on
         let g:deoplete#sources#jedi#show_docstring = 1
         let g:neomake_python_enabled_makers = ['flake8']
         au FileType python au! BufWritePost * Neomake
+    " }
+
+    " c/c++ {
+        if g:LINUX
+            let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-4.0/lib/libclang.so'
+            let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-4.0/lib/clang'
+        endif
     " }
     
     " echodoc {
