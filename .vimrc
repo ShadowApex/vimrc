@@ -248,6 +248,10 @@ filetype plugin on
             let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-4.0/lib/libclang.so'
             let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-4.0/lib/clang'
         endif
+        if g:MAC
+            let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/5.0.0/lib/libclang.dylib'
+            let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm'
+        endif
     " }
     
     " echodoc {
