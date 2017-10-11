@@ -195,6 +195,9 @@ filetype plugin on
         " vim-go {
             let g:neomake_go_enabled_makers = ['go']
         " }
+        " cpp {
+            let g:neomake_cpp_enabled_makers = ['clang']
+        " }
     " }
     
     " deocomplete {
@@ -203,6 +206,11 @@ filetype plugin on
         " deoplete-go settings {
             let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
             let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+        " }
+
+        " deoplete popup {
+            let g:deoplete#enable_smart_case = 1
+            let g:deoplete#auto_complete_delay = 2
         " }
     " }
 
@@ -252,6 +260,7 @@ filetype plugin on
             let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/5.0.0/lib/libclang.dylib'
             let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm'
         endif
+        au FileType cpp au! BufWritePost * Neomake
     " }
     
     " echodoc {
@@ -386,10 +395,15 @@ filetype plugin on
     " Launch a bash terminal
     nnoremap <F3> :below 10sp term://$SHELL<cr>i
     
-    " When deocomplete is active, enter inserts the word and mutes the <CR>
-    "inoremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
     " When deocomplete is active, tab inserts the word.
-    inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+    inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ deoplete#mappings#manual_complete()
+    function! s:check_back_space() abort "{{{
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction"}}}
     
     " Tagbar
     nmap <F8> :TagbarToggle<CR>
