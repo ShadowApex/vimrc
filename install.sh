@@ -21,7 +21,7 @@ baseDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Install NeoVim and dependencies
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update && sudo apt install -y curl git neovim python-dev python python-pip python3-dev python3 python3-pip pep8 flake8 silversearcher-ag
-sudo apt install -y clang libclang1 libclang-4.0-dev
+sudo apt install -y clang clang-format libclang1 libclang-4.0-dev
 sudo pip install -U neovim
 sudo pip3 install -U neovim
 

@@ -19,6 +19,7 @@ filetype plugin on
         Plug 'scrooloose/nerdtree'
         Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
         Plug 'Shougo/echodoc.vim'
+        Plug 'Shougo/neco-syntax'
         Plug 'kien/ctrlp.vim'
         Plug 'kassio/neoterm'
         Plug 'terryma/vim-expand-region'
@@ -39,6 +40,7 @@ filetype plugin on
         " C/C++
         Plug 'zchee/deoplete-clang'
         Plug 'Shougo/neoinclude.vim'
+        Plug 'rhysd/vim-clang-format'
         " openCL
         Plug 'petRUShka/vim-opencl'
         " erlang
@@ -260,7 +262,8 @@ filetype plugin on
             let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/5.0.0/lib/libclang.dylib'
             let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm'
         endif
-        au FileType cpp au! BufWritePost * Neomake
+        au FileType c,cpp,objc,hpp,h au! BufWritePost * Neomake
+        au FileType c,cpp ClangFormatAutoEnable
     " }
     
     " echodoc {

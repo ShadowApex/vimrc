@@ -44,7 +44,7 @@
 `vim +GoInstallBinaries +qall`    
 
 * (Optional) Install C/C++ support    
-`sudo apt install clang libclang1 libclang-4.0-dev`
+`sudo apt install clang clang-format libclang1 libclang-4.0-dev`
 
 ### Mac OS X
 
@@ -85,4 +85,5 @@
 `vim +GoInstallBinaries +qall`    
 
 * (Optional) Install C/C++ support    
-`brew install llvm --with-clang`
+`brew install llvm --with-clang`    
+`brew install clang-format`    
