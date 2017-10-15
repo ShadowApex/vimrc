@@ -106,6 +106,10 @@ filetype plugin on
 
     " Change directories into the file's directory
     set autochdir
+
+    " This will increase the amount of memory used for patterns
+    " It is needed with airline with large files.
+    set maxmempattern=30000
 "}
 
 " Edit {
@@ -113,7 +117,7 @@ filetype plugin on
     set virtualedit=onemore
 
     " Automatically reload modified files
-    set autoread
+    "set autoread
 
     " Undo and swap location
     set undolevels=1000 " Lots of undo
@@ -125,10 +129,10 @@ filetype plugin on
     " Always position quickfix window to the bottom
     au FileType qf wincmd J
 
-    " Fold settings {
-            set foldmethod=syntax	" automatically fold by syntax
-            set nofoldenable	" have folds open by default
-            set foldlevel=99	" prevent automatic folding unless we need to   
+    " Fold settings (can be slow with big files) {
+            "set foldmethod=syntax	" automatically fold by syntax
+            "set nofoldenable	" have folds open by default
+            "set foldlevel=99	" prevent automatic folding unless we need to   
     "}
 
     " Clipboard {
@@ -231,7 +235,7 @@ filetype plugin on
 
     " airline {
         let g:airline_theme = 'airlineish'
-        let g:airline#extensions#tabline#enabled = 1
+        let g:airline#extensions#tabline#enabled = 1  " Disable for large files
         let g:airline_powerline_fonts = 1
         set laststatus=2
     " }
