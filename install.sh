@@ -35,8 +35,8 @@ sudo update-alternatives --config editor --skip-auto
 
 # Link our vimrc to the appropriate locations
 mkdir -p ~/.config/nvim
-ln -s $baseDir/vimrc/.vimrc ~/.vimrc
-ln -s $baseDir/vimrc/.vimrc ~/.config/nvim/init.vim
+ln -s $baseDir/.vimrc ~/.vimrc
+ln -s $baseDir/.vimrc ~/.config/nvim/init.vim
 
 # Install plugin manager
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
