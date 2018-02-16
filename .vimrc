@@ -1,4 +1,4 @@
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=10 foldmethod=marker spell:
 
 filetype plugin on
 
@@ -34,6 +34,7 @@ filetype plugin on
         " Golang
         Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
         Plug 'zchee/deoplete-go', { 'do': 'make'}
+        Plug 'jodosha/vim-godebug'
         " Rust
         Plug 'rust-lang/rust.vim'
         Plug 'sebastianmarkow/deoplete-rust'
@@ -242,6 +243,13 @@ filetype plugin on
     
     " yaml {
         autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+        " Requires 'yamllint' for linting
+        au FileType yaml au! BufWritePost * Neomake
+    " }
+    
+    " json {
+        au FileType json au! BufWritePost * Neomake
     " }
 
     " puppet {
@@ -249,12 +257,18 @@ filetype plugin on
         autocmd BufNewFile,BufRead *.pp set syntax=puppet
         autocmd BufNewFile,BufRead *.pp set autoread
         autocmd BufNewFile,BufRead *.pp setfiletype puppet
+
+        au FileType puppet au! BufWritePost * Neomake
     " }
     
     " python {
         let g:deoplete#sources#jedi#show_docstring = 1
         let g:neomake_python_enabled_makers = ['flake8']
         au FileType python au! BufWritePost * Neomake
+    " }
+    
+    " groovy {
+        au BufNewFile,BufRead *.groovy setlocal ts=4 sts=4 sw=4 expandtab
     " }
 
     " c/c++ {
