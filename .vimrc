@@ -11,7 +11,8 @@ filetype plugin on
 " Load plugins {
     call plug#begin('~/.vim/plugged')
         " Colors    
-        Plug 'frankier/neovim-colors-solarized-truecolor-only'
+        "Plug 'frankier/neovim-colors-solarized-truecolor-only'
+        Plug 'dracula/vim'
         Plug 'paranoida/vim-airlineish'
         " Useful tools
         Plug 'bling/vim-airline'
@@ -79,13 +80,12 @@ filetype plugin on
 " }
 
 " Look and feel {
-    "set termguicolors
-	"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-	"let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+    set termguicolors
+	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+	let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 	 
 	syntax enable
-	"colorscheme solarized 
-	"set background=dark
+    colorscheme dracula
 
     " Highlight searches
     set hlsearch
