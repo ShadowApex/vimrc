@@ -141,6 +141,20 @@ filetype plugin on
         " set it to the first line when editing a git commit message
         au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
     " }
+
+    " Binary hex editing {
+    " vim -b : edit binary using xxd-format!
+	    augroup Binary
+	        au!
+	        au BufReadPre  *.bin,*.so,*.o,*.exe let &bin=1
+	        au BufReadPost *.bin,*.so,*.o,*.exe if &bin | %!xxd
+	        au BufReadPost *.bin,*.so,*.o,*.exe set ft=xxd | endif
+	        au BufWritePre *.bin,*.so,*.o,*.exe if &bin | %!xxd -r
+	        au BufWritePre *.bin,*.so,*.o,*.exe endif
+	        au BufWritePost *.bin,*.so,*.o,*.exe if &bin | %!xxd
+	        au BufWritePost *.bin,*.so,*.o,*.exe set nomod | endif
+        augroup END
+    " }
 " }
 
  " Formatting {
