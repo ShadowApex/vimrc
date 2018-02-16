@@ -6,7 +6,7 @@
 
 * Install NeoVim and dependencies    
 `sudo add-apt-repository ppa:neovim-ppa/unstable`    
-`sudo apt update && sudo apt install curl git neovim python-dev python python-pip python3-dev python3 python3-pip python-demjson pep8 flake8 silversearcher-ag yamllint puppet-lint`    
+`sudo apt update && sudo apt install curl git neovim python-dev python python-pip python3-dev python3 python3-pip python-demjson pep8 flake8 silversearcher-ag yamllint puppet-lint shellcheck`    
 `sudo pip install -U neovim`    
 `sudo pip3 install -U neovim`    
 
@@ -52,7 +52,7 @@
 `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`    
 
 * Install NeoVim and dependencies    
-`brew install neovim curl python python3 git flake8 ag grip`    
+`brew install neovim curl python python3 git flake8 ag grip shellcheck`    
 `sudo pip install -U neovim`    
 `sudo pip3 install -U neovim`    
 

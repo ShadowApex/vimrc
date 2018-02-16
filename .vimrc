@@ -252,6 +252,10 @@ filetype plugin on
         au FileType json au! BufWritePost * Neomake
     " }
 
+    " bash/sh {
+        au FileType sh,bash au! BufWritePost * Neomake
+    " }
+
     " puppet {
         " Enable syntax highlighting for puppet modules.
         autocmd BufNewFile,BufRead *.pp set syntax=puppet
