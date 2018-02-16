@@ -32,7 +32,7 @@ filetype plugin on
         Plug 'raimondi/delimitmate'
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         " Golang
-        Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
+        Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'}
         Plug 'zchee/deoplete-go', { 'do': 'make'}
         Plug 'jodosha/vim-godebug'
         " Rust
