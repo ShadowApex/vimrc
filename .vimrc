@@ -11,7 +11,6 @@ filetype plugin on
 " Load plugins {
     call plug#begin('~/.vim/plugged')
         " Colors    
-        "Plug 'frankier/neovim-colors-solarized-truecolor-only'
         Plug 'dracula/vim'
         Plug 'paranoida/vim-airlineish'
         " Useful tools
@@ -61,8 +60,6 @@ filetype plugin on
 "}
 
 " Nvim specific {
-    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
     " NeoVim Python
     if g:LINUX
@@ -82,7 +79,6 @@ filetype plugin on
 " Look and feel {
     set termguicolors
 	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-	let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 	 
 	syntax enable
     colorscheme dracula
@@ -129,12 +125,6 @@ filetype plugin on
 
     " Always position quickfix window to the bottom
     au FileType qf wincmd J
-
-    " Fold settings (can be slow with big files) {
-            "set foldmethod=syntax	" automatically fold by syntax
-            "set nofoldenable	" have folds open by default
-            "set foldlevel=99	" prevent automatic folding unless we need to   
-    "}
 
     " Clipboard {
         if has('clipboard')
@@ -183,7 +173,7 @@ filetype plugin on
         let g:go_highlight_operators = 1
         let g:go_highlight_build_constraints = 1
         let g:go_fmt_fail_silently = 0
-        let g:go_fmt_command = "goimports"
+        let g:go_fmt_command = "gofmt"
         let g:go_list_type = "quickfix" 
 
         " Run automake on go file save
@@ -191,7 +181,7 @@ filetype plugin on
     " }
 
     " tagbar {
-        let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+        let g:tagbar_ctags_bin = '/usr/bin/ctags'
     " }
     
     " neomake {
@@ -205,6 +195,9 @@ filetype plugin on
         " cpp {
             let g:neomake_cpp_enabled_makers = ['clang']
         " }
+        " python {
+            let g:neomake_python_enabled_makers = ['flake8']
+        " }
     " }
     
     " deocomplete {
@@ -212,12 +205,15 @@ filetype plugin on
         
         " deoplete-go settings {
             let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-            let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
         " }
 
         " deoplete popup {
             let g:deoplete#enable_smart_case = 1
             let g:deoplete#auto_complete_delay = 2
+        " }
+
+        " deoplete tab to insert {
+            inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
         " }
     " }
 
@@ -267,7 +263,6 @@ filetype plugin on
     
     " python {
         let g:deoplete#sources#jedi#show_docstring = 1
-        let g:neomake_python_enabled_makers = ['flake8']
         au FileType python au! BufWritePost * Neomake
     " }
     
@@ -317,28 +312,6 @@ filetype plugin on
         let g:ag_prg='ag -S --nocolor --nogroup --column --ignore node_modules --ignore Godeps --vimgrep -F'
     " }
 
-    " syntastic {
-"        let g:syntastic_enable_signs = 0
-"        let g:syntastic_enable_highlighting = 0
-"        let g:syntastic_auto_loc_list = 0
-"        let g:syntastic_always_populate_loc_list = 0
-"        let g:syntastic_auto_loc_list = 0
-"        let g:syntastic_loc_list_height = 5
-"        let g:syntastic_check_on_open = 0
-"        let g:syntastic_check_on_wq = 0
-"
-"        let g:syntastic_aggregate_errors = 1
-"
-"        " vim-go {
-"            let g:syntastic_go_checkers = ['go', 'govet', 'golint', 'errcheck']
-"            let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-"        " }
-"        
-"        " opencl {
-"            let g:syntastic_opencl_clcc_args = "-W"
-"        " }
-    " }
-    
     " vim-markdown-preview {
     let vim_markdown_preview_github=1
     let vim_markdown_preview_hotkey='<C-m>'
@@ -419,17 +392,7 @@ filetype plugin on
 
     " Launch a bash terminal
     nnoremap <F3> :below 10sp term://$SHELL<cr>i
-    
-    " When deocomplete is active, tab inserts the word.
-    inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ deoplete#mappings#manual_complete()
-    function! s:check_back_space() abort "{{{
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction"}}}
-    
+   
     " Tagbar
     nmap <F8> :TagbarToggle<CR>
 
