@@ -6,7 +6,7 @@
 
 * Install NeoVim and dependencies    
 `sudo add-apt-repository ppa:neovim-ppa/unstable`    
-`sudo apt update && sudo apt install curl git neovim python-dev python python-pip python3-dev python3 python3-pip python-demjson pep8 flake8 silversearcher-ag yamllint puppet-lint shellcheck`    
+`sudo apt update && sudo apt install curl git neovim python-dev python python-pip python3-dev python3 python3-pip python-demjson pep8 flake8 silversearcher-ag yamllint puppet-lint shellcheck exuberant-ctags xclip fonts-powerline`    
 `sudo pip install -U neovim`    
 `sudo pip3 install -U neovim`    
 
