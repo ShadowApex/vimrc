@@ -39,6 +39,7 @@ filetype plugin on
         " Rust
         Plug 'rust-lang/rust.vim'
         Plug 'sebastianmarkow/deoplete-rust'
+        Plug 'racer-rust/vim-racer'
         " C/C++
         Plug 'zchee/deoplete-clang'
         Plug 'Shougo/neoinclude.vim'
@@ -187,7 +188,15 @@ filetype plugin on
         let g:go_list_type = "quickfix" 
 
         " Run automake on go file save
-       au FileType go au! BufWritePost * Neomake
+        au FileType go au! BufWritePost * Neomake
+    " }
+    
+    " rust {
+        let g:rustfmt_autosave = 1
+        let g:racer_experimental_completer = 1
+        let g:deoplete#sources#rust#racer_binary = $HOME.'/.cargo/bin/racer'
+        let g:deoplete#sources#rust#rust_source_path = '/usr/src/rustc-1.21.0/src'
+        au FileType rust au! BufWritePost * Neomake
     " }
 
     " tagbar {
