@@ -14,47 +14,58 @@ filetype plugin on
         Plug 'dracula/vim'
         Plug 'paranoida/vim-airlineish'
         " Useful tools
-        Plug 'bling/vim-airline'
-        Plug 'scrooloose/nerdcommenter'
-        Plug 'scrooloose/nerdtree'
+        Plug 'Konfekt/FastFold'
         Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
         Plug 'Shougo/echodoc.vim'
         Plug 'Shougo/neco-syntax'
-        Plug 'kien/ctrlp.vim'
-        Plug 'kassio/neoterm'
-        Plug 'terryma/vim-expand-region'
-        Plug 'Konfekt/FastFold'
-        Plug 'jeffkreeftmeijer/vim-numbertoggle'
-        Plug 'neomake/neomake'
+        Plug 'bling/vim-airline'
+        Plug 'editorconfig/editorconfig-vim'
+        Plug 'fidian/hexmode'
         Plug 'godlygeek/tabular'
-        Plug 'numkil/ag.nvim'
-        Plug 'vim-scripts/visual-increment'
-        Plug 'raimondi/delimitmate'
+        Plug 'jeffkreeftmeijer/vim-numbertoggle'
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        Plug 'kassio/neoterm'
+        Plug 'kien/ctrlp.vim'
+        Plug 'mileszs/ack.vim'
+        Plug 'neomake/neomake'
+        Plug 'numkil/ag.nvim'
+        Plug 'raimondi/delimitmate'
+        Plug 'scrooloose/nerdcommenter'
+        Plug 'scrooloose/nerdtree'
+        Plug 'terryma/vim-expand-region'
+        Plug 'vim-scripts/visual-increment'
+        Plug 'wincent/terminus'
+        "Plug 'vim-syntastic/syntastic'
         " Golang
         Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries'}
-        Plug 'zchee/deoplete-go', { 'do': 'make'}
         Plug 'jodosha/vim-godebug'
+        Plug 'zchee/deoplete-go', { 'do': 'make'}
+        Plug 'zchee/deoplete-jedi'
         " Rust
+        Plug 'racer-rust/vim-racer'
         Plug 'rust-lang/rust.vim'
         Plug 'sebastianmarkow/deoplete-rust'
-        Plug 'racer-rust/vim-racer'
         " C/C++
-        Plug 'zchee/deoplete-clang'
         Plug 'Shougo/neoinclude.vim'
         Plug 'rhysd/vim-clang-format'
+        Plug 'zchee/deoplete-clang'
         " openCL
         Plug 'petRUShka/vim-opencl'
         " erlang
         Plug 'vim-erlang/vim-erlang-compiler'
         " Puppet
-        Plug 'rodjek/vim-puppet'
         Plug 'puppetlabs/puppet-syntax-vim'
+        Plug 'rodjek/vim-puppet'
+        " Terraform
+        "Plug 'hashivim/vim-terraform'
+        "Plug 'juliosueiras/vim-terraform-completion'
         " Python
         Plug 'zchee/deoplete-jedi'
+        " Ruby
+        Plug 'vim-ruby/vim-ruby'
         " Git helpers
-        Plug 'tpope/vim-fugitive'
         Plug 'airblade/vim-gitgutter'
+        Plug 'tpope/vim-fugitive'
         " MD preview (use with brew install grip)
         Plug 'JamshedVesuna/vim-markdown-preview'
     call plug#end()
@@ -80,13 +91,15 @@ filetype plugin on
 " Look and feel {
     set termguicolors
 	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    "set guicursor=
 	 
 	syntax enable
     colorscheme dracula
 
     " Highlight searches
     set hlsearch
-    highlight Search cterm=NONE ctermfg=white ctermbg=blue
+    highlight Search cterm=NONE ctermfg=white ctermbg=LightBlue
+    highlight Search guibg=LightBlue guifg=white
 
 	" Enable mouse support
 	set mouse=a
@@ -104,11 +117,25 @@ filetype plugin on
 
     " Change directories into the file's directory
     set autochdir
+    set autowrite
 
     " This will increase the amount of memory used for patterns
     " It is needed with airline with large files.
     set maxmempattern=30000
 "}
+
+" Common Typos {
+    cnoreabbrev W! w!
+    cnoreabbrev Q! q!
+    cnoreabbrev Qall! qall!
+    cnoreabbrev Wq wq
+    cnoreabbrev Wa wa
+    cnoreabbrev wQ wq
+    cnoreabbrev WQ wq
+    cnoreabbrev W w
+    cnoreabbrev Q q
+    cnoreabbrev Qall qall
+" }
 
 " Edit {
     " Allow cursor after last line character
@@ -190,6 +217,10 @@ filetype plugin on
         let g:go_fmt_fail_silently = 0
         let g:go_fmt_command = "gofmt"
         let g:go_list_type = "quickfix" 
+        "let g:go_auto_sameids = 1
+        "let g:go_auto_type_info = 1
+        let g:go_addtags_transform = "snakecase"
+        let g:go_info_mode = "gocode"
 
         " Run automake on go file save
         au FileType go au! BufWritePost * Neomake
@@ -201,6 +232,11 @@ filetype plugin on
         let g:deoplete#sources#rust#racer_binary = $HOME.'/.cargo/bin/racer'
         let g:deoplete#sources#rust#rust_source_path = '/usr/src/rustc-1.21.0/src'
         au FileType rust au! BufWritePost * Neomake
+    " }
+    
+    " ruby {
+        " Run automake on go file save
+        au FileType ruby au! BufWritePost * Neomake
     " }
 
     " tagbar {
@@ -225,14 +261,18 @@ filetype plugin on
     
     " deocomplete {
         let g:deoplete#enable_at_startup = 1
+        call deoplete#custom#option('num_processes', 4)
         
         " deoplete-go settings {
             let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+            let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+            let g:deoplete#sources#go#pointer = 1
         " }
 
         " deoplete popup {
             let g:deoplete#enable_smart_case = 1
-            let g:deoplete#auto_complete_delay = 2
+            let g:deoplete#auto_complete_delay = 0
+            let g:deoplete#auto_refresh_delay = 10
         " }
 
         " deoplete tab to insert {
@@ -285,6 +325,26 @@ filetype plugin on
 
         au FileType puppet au! BufWritePost * Neomake
     " }
+
+    " terraform {
+        " Deoplete
+        "let g:deoplete#omni_patterns = {}
+        "let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+        "call deoplete#custom#option('omni_patterns', {'complete_method': 'omnifunc', 'terraform': '[^ *\t"{=$]\w*'})
+        "call deoplete#initialize()
+
+        "" Enable terraform plan to be include in filter
+        "let g:syntastic_terraform_tffilter_plan = 1
+
+        "" default: 0, enable(1)/disable(0) plugin's keymapping
+        "let g:terraform_completion_keys = 0
+
+        "" default: 1, enable(1)/disable(0) terraform module registry
+        "" completion
+        "let g:terraform_registry_module_completion = 0
+
+        "let g:terraform_module_registry_search = 0
+    " }
     
     " python {
         let g:deoplete#sources#jedi#show_docstring = 1
@@ -325,6 +385,12 @@ filetype plugin on
           let g:ctrlp_prompt_mappings = {
             \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
             \ }
+        endif
+    " }
+    
+    " ack {
+        if executable('ag')
+            let g:ackprg = 'ag --vimgrep'
         endif
     " }
     
@@ -381,11 +447,13 @@ filetype plugin on
     au FileType go nmap <leader>t :GoTest!<CR>
     au FileType go nmap <leader><leader>t :GoTestFunc!<CR>
     au FileType go nmap <leader>r :GoRun!<CR>
-    au FileType go nmap <leader>d <Plug>(go-def-vertical)
+    au FileType go nmap <leader>b :GoToggleBreakpoint!<CR>
+    au FileType go nmap <leader>d :GoDebug!<CR>
     au FileType go nmap <leader>c <Plug>(go-callers)
     au FileType go nmap <leader>i <Plug>(go-implements)
     au FileType go nmap <Leader>g <Plug>(go-def-tab)
-    au FileType go nmap <leader>b  <Plug>(go-build)
+    "au FileType go nmap <leader>d <Plug>(go-def-vertical)
+    "au FileType go nmap <leader>b  <Plug>(go-build)
 
     " Indentation shortcuts
     nnoremap <F5> mzgg=G`z

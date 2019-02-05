@@ -46,3 +46,7 @@ ln -s ~/.vim/autoload/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
 # Install Plugins
 vim +PlugInstall +qall
 vim +VimEnter +UpdateRemotePlugins +qall
+
+# Install gocode with module support 
+#go get -u github.com/stamblerre/gocode
+go get -u github.com/visualfc/gocode
