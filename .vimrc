@@ -56,6 +56,7 @@
         Plug 'raimondi/delimitmate'
         " Git
         Plug 'airblade/vim-gitgutter'
+        Plug 'tpope/vim-fugitive'
     call plug#end()
 "}
 "
