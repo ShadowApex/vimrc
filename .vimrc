@@ -53,7 +53,7 @@
         " Formatters
         Plug 'sbdchd/neoformat'
         " Insert bracks/parens in pairs
-        Plug 'jiangmiao/auto-pairs'
+        Plug 'raimondi/delimitmate'
         " Git
         Plug 'airblade/vim-gitgutter'
     call plug#end()
