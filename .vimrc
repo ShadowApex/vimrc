@@ -57,6 +57,13 @@
         " Git
         Plug 'airblade/vim-gitgutter'
         Plug 'tpope/vim-fugitive'
+        Plug 'junegunn/gv.vim'
+        " Multi-cursor
+        Plug 'terryma/vim-multiple-cursors'
+        " Indentation guide
+        Plug 'Yggdroot/indentLine'
+        " Change into a project root
+        Plug 'airblade/vim-rooter'
     call plug#end()
 "}
 "
@@ -303,7 +310,14 @@
         set noshowmode
         let g:echodoc_enable_at_startup = 1
     " }
- 
+
+    " indentline {
+        " Enable indent line guides by default
+        let g:indentLine_enabled = 1
+
+        " Character to use for indent line
+        let g:indentLine_char = '┊'
+    " }
 " }
 
 " Keybindings {
