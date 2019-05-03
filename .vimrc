@@ -25,6 +25,8 @@
         Plug 'roxma/nvim-yarp'
         Plug 'ncm2/ncm2'
         Plug 'ncm2/ncm2-bufword'
+        Plug 'fgrsnau/ncm-otherbuf'
+        Plug 'Shougo/echodoc.vim'
         " File Completion/Search
         Plug 'ncm2/ncm2-path'
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -50,6 +52,10 @@
         Plug 'w0rp/ale'
         " Formatters
         Plug 'sbdchd/neoformat'
+        " Insert bracks/parens in pairs
+        Plug 'jiangmiao/auto-pairs'
+        " Git
+        Plug 'airblade/vim-gitgutter'
     call plug#end()
 "}
 "
@@ -101,7 +107,10 @@
 	        au BufWritePost *.bin,*.so,*.o,*.exe set nomod | endif
         augroup END
     " }
-
+    
+    " Indent same level as previous line
+    set smartindent
+    set autoindent
 " }
 
 " Look and Feel {
@@ -132,14 +141,24 @@
         " set completeopt to be what ncm2 expects
         set completeopt=noinsert,menuone,noselect
 
-        " When the <Enter> key is pressed while the popup menu is visible, it only
-        " hides the menu. Use this mapping to close the menu and also start a new
-        " line.
-        inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+        " supress the annoying 'match x of y', 'The only match' and 'Pattern not
+        " found' messages
+        set shortmess+=c
 
-        " Use <TAB> to select the popup menu:
-        inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-        inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+        " enable auto complete for `<backspace>`, `<c-w>` keys.
+        " known issue https://github.com/ncm2/ncm2/issues/7
+        au TextChangedI * call ncm2#auto_trigger()
+
+	    " Use <TAB> to select the popup menu:
+	    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+		inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+        " make it fast
+        let ncm2#popup_delay = 5
+        let ncm2#complete_length = [[1, 1]]
+
+        " Use new fuzzy based matches
+        let g:ncm2#matcher = 'substrfuzzy'
     " }
     
     " vim-lsp {
@@ -198,6 +217,31 @@
                     \ })
             endif
         " }
+
+        " ruby {
+            if executable('solargraph')
+                " gem install solargraph
+                au User lsp_setup call lsp#register_server({
+                    \ 'name': 'solargraph',
+                    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'solargraph stdio']},
+                    \ 'initialization_options': {"diagnostics": "true"},
+                    \ 'whitelist': ['ruby'],
+                    \ })
+            endif
+        " }
+
+        " rust {
+			" rustup update
+            " rustup component add rls rust-analysis rust-src
+			if executable('rls')
+			    au User lsp_setup call lsp#register_server({
+			        \ 'name': 'rls',
+			        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+			        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
+			        \ 'whitelist': ['rust'],
+			        \ })
+			endif
+        " }
     " }
 
     " Ale {
@@ -254,9 +298,21 @@
         endif
     " }
 
+    " echodoc {
+        set noshowmode
+        let g:echodoc_enable_at_startup = 1
+    " }
+ 
 " }
 
 " Keybindings {
     " Launch a bash terminal
     nnoremap <F3> :below 10sp term://$SHELL<cr>i
+
+    " Golang {
+        " Use '\g' to go to definition
+        au FileType go nmap <Leader>g :LspDefinition<CR>
+        " Use 'K' to pull up documentation
+        au FileType go nmap K :LspHover<CR>
+    " }
 " }

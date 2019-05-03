@@ -20,7 +20,7 @@ baseDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Install NeoVim and dependencies
 sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt update && sudo apt install -y curl git neovim python-dev python python-pip python3-dev python3 python3-pip python-demjson pep8 flake8 silversearcher-ag yamllint puppet-lint shellcheck exuberant-ctags xclip fonts-powerline
+sudo apt update && sudo apt install -y curl git neovim python-dev python python-pip python3-dev python3 python3-pip python-demjson pep8 flake8 silversearcher-ag yamllint puppet-lint shellcheck exuberant-ctags xclip fonts-powerline python-jedi python3-jedi
 sudo apt install -y clang clang-format libclang1 libclang-4.0-dev
 sudo pip install -U neovim
 sudo pip3 install -U neovim
@@ -37,16 +37,3 @@ sudo update-alternatives --config editor --skip-auto
 mkdir -p ~/.config/nvim
 ln -s "$baseDir/.vimrc" ~/.vimrc
 ln -s "$baseDir/.vimrc" ~/.config/nvim/init.vim
-
-# Install plugin manager
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-mkdir -p ~/.local/share/nvim/site/autoload
-ln -s ~/.vim/autoload/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
-
-# Install Plugins
-vim +PlugInstall +qall
-vim +VimEnter +UpdateRemotePlugins +qall
-
-# Install gocode with module support 
-#go get -u github.com/stamblerre/gocode
-go get -u github.com/visualfc/gocode
