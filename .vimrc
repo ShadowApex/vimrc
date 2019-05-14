@@ -36,6 +36,7 @@
 		Plug 'prabirshrestha/vim-lsp'
         Plug 'ncm2/ncm2-vim-lsp'
         " Golang
+        Plug 'sebdah/vim-delve'
         "Plug 'ncm2/ncm2-go'
         " Javascript/Typescript
         Plug 'ncm2/ncm2-cssomni'
@@ -169,6 +170,10 @@
         let g:ncm2#matcher = 'substrfuzzy'
     " }
     
+    " vim-delve {
+        let g:delve_new_command = 'enew'
+    " }
+
     " vim-lsp {
         " Language servers can be registered here. For a list, refer to this:
         " https://github.com/prabirshrestha/vim-lsp/wiki/Servers
@@ -329,5 +334,7 @@
         au FileType go nmap <Leader>g :LspDefinition<CR>
         " Use 'K' to pull up documentation
         au FileType go nmap K :LspHover<CR>
+        " Use '\t' to toggle breakpoint 
+        au FileType go nmap <Leader>t :DlvToggleBreakpoint<CR>
     " }
 " }
