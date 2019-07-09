@@ -67,7 +67,7 @@
         Plug 'airblade/vim-rooter'
     call plug#end()
 "}
-"
+
 " General {
 	scriptencoding utf-8
     set encoding=utf8
@@ -120,6 +120,12 @@
     " Indent same level as previous line
     set smartindent
     set autoindent
+
+    " C/C++
+    autocmd FileType cpp setlocal shiftwidth=2 softtabstop=2 expandtab
+
+    " YAML
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 " }
 
 " Look and Feel {
@@ -214,7 +220,7 @@
             " `npm install -g dockerfile-language-server-nodejs`
             if executable('docker-langserver')
                 au User lsp_setup call lsp#register_server({
-                    \ 'name': 'docker-langserver',
+                    \ 'name': 'docker-lsp',
                     \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
                     \ 'whitelist': ['dockerfile'],
                     \ })
@@ -228,6 +234,38 @@
                     \ 'cmd': {server_info->['clangd', '-background-index']},
                     \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
                     \ })
+            endif
+        " }
+
+        " css {
+            " `npm install -g vscode-css-languageserver-bin`
+            if executable('css-languageserver')
+                au User lsp_setup call lsp#register_server({
+                    \ 'name': 'css-lsp',
+                    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+                    \ 'whitelist': ['css', 'less', 'sass'],
+                    \ })
+            endif
+        " }
+
+        " javascript/typescript {
+            " `npm install -g typescript typescript-language-server`
+            if executable('typescript-language-server')
+                " Use directory with .git as root
+                au User lsp_setup call lsp#register_server({
+                  \ 'name': 'javascript-lsp',
+                  \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+                  \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
+                  \ 'whitelist': ['javascript', 'javascript.jsx']
+                  \ })
+
+                " Use directory with package.json as root
+                "au User lsp_setup call lsp#register_server({
+                "    \ 'name': 'javascript-lsp',
+                "    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+                "    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
+                "    \ 'whitelist': ['javascript', 'javascript.jsx'],
+                "    \ })
             endif
         " }
 
@@ -266,6 +304,17 @@
 			        \ })
 			endif
         " }
+
+        " yaml {
+            " `npm install -g yaml-language-server`
+            if executable('yaml-language-server')
+                au User lsp_setup call lsp#register_server({
+                    \ 'name': 'yaml-lsp',
+                    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'yaml-language-server --stdio']},
+                    \ 'whitelist': ['yaml', 'yml'],
+                    \ })
+            endif
+        " }
     " }
 
     " Ale {
@@ -274,14 +323,41 @@
     " }
 
     " Neoformat {
+        " Have Neoformat use &formatprg as a formatter
+        let g:neoformat_try_formatprg = 1
+
+        " Define the formatter function to run.
+        fun! RunFormatter()
+            if exists('b:noFormatter')
+                return
+            endif
+            undojoin | :silent Neoformat
+        endfun
+
         " Format on save, if desired
         augroup fmt
           autocmd!
-          autocmd BufWritePre * undojoin | Neoformat
+          autocmd BufWritePre * call RunFormatter()
+          autocmd FileType yaml,json let b:noFormatter=1
+          "autocmd BufWritePre * undojoin | :silent Neoformat
         augroup END
-        
+
         " To Run Manually
         nnoremap <leader>fm :Neoformat<CR>
+        
+        " javascript {
+            if executable('prettier')
+                augroup fmtjs
+                    autocmd!
+                    autocmd FileType javascript setlocal formatprg=prettier\
+                                                             \--stdin\
+                                                             \--print-width\ 80\
+                                                             \--single-quote\
+                                                             \--trailing-comma\ es5
+                    autocmd BufWritePre *.js :silent Neoformat
+                augroup END
+            endif
+        " }
     " }
 
     " FZF {
@@ -340,11 +416,14 @@
     " Launch a bash terminal
     nnoremap <F3> :below 10sp term://$SHELL<cr>i
 
-    " Golang {
+    " LSP {
         " Use '\g' to go to definition
-        au FileType go nmap <Leader>g :LspDefinition<CR>
+        au FileType * nmap <Leader>g :LspDefinition<CR>
         " Use 'K' to pull up documentation
-        au FileType go nmap K :LspHover<CR>
+        au FileType * nmap K :LspHover<CR>    
+    " }
+
+    " Golang {
         " Use '\t' to toggle breakpoint 
         au FileType go nmap <Leader>t :DlvToggleBreakpoint<CR>
     " }

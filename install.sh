@@ -48,9 +48,10 @@ setup_ubuntu () {
 
 	# Setup npm and plugin dependencies for Javascript/CSS/Typescript/Docker
 	sudo apt install npm
-	npm install -g dockerfile-language-server-nodejs
-	npm install -g vscode-css-languageserver-bin
-	npm install -g typescript typescript-language-server
+	sudo npm install -g dockerfile-language-server-nodejs
+	sudo npm install -g vscode-css-languageserver-bin
+	sudo npm install -g typescript typescript-language-server
+	sudo npm install -g prettier
 
 	# Setup C/C++ plugin dependencies
 	sudo apt install clang-tools
