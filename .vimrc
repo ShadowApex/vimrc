@@ -37,11 +37,15 @@
         Plug 'ncm2/ncm2-vim-lsp'
         " Golang
         Plug 'sebdah/vim-delve'
-        "Plug 'ncm2/ncm2-go'
+        Plug 'ncm2/ncm2-go'
         " Javascript/Typescript
         Plug 'ncm2/ncm2-cssomni'
         Plug 'ncm2/ncm2-tern', {'do': 'npm install'}
         Plug 'mhartington/nvim-typescript'
+        " Kubernetes
+        Plug 'towolf/vim-helm'
+        " Terraform
+        Plug 'hashivim/vim-terraform'
         " Python
         Plug 'ncm2/ncm2-jedi'
         " Puppet
@@ -269,6 +273,19 @@
             endif
         " }
 
+        " puppet {
+            " `git clone
+            " https://github.com/lingua-pupuli/puppet-editor-services.git &&
+            " cd puppet-editor-services && bundle install` 
+            if executable('puppet-languageserver')
+                au User lsp_setup call lsp#register_server({
+                  \ 'name': 'puppet-lsp',
+                  \ 'cmd': { server_info->[&shell, &shellcmdflag, 'puppet-languageserver --stdio']},
+                  \ 'whitelist': ['puppet', 'pp']
+                  \ })
+            endif
+        " }
+
         " python {
             " `pip install python-language-server`
             if executable('pyls')
@@ -303,6 +320,17 @@
 			        \ 'whitelist': ['rust'],
 			        \ })
 			endif
+        " }
+
+        " terraform {
+            " `go install github.com/juliosueiras/terraform-lsp`
+            if executable('terraform-lsp')
+                au User lsp_setup call lsp#register_server({
+                    \ 'name': 'terraform-lsp',
+                    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'terraform-lsp']},
+                    \ 'whitelist': ['tf', 'terraform'],
+                    \ })
+            endif
         " }
 
         " yaml {
