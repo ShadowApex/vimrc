@@ -15,8 +15,8 @@ NPM_PKGS    := neovim n yarn
 
 # This is a list of COC plugins to install for different completion support
 # https://github.com/neoclide/coc.nvim
-COC_PLUGINS := coc-json coc-highlight coc-python coc-tag coc-neco \
-	coc-emoji coc-gocode coc-syntax
+COC_PLUGINS := coc-json coc-highlight coc-tag coc-pairs \
+	coc-emoji coc-syntax coc-prettier
 
 # Setup function for Ubuntu
 define install_Ubuntu

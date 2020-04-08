@@ -31,6 +31,20 @@
 	"filetypes": ["gd", "gdscript3"],
 	"port": 6008
     },
+    "golang": {
+    	"command": "gopls",
+	"args": ["-mode", "stdio"],
+	"filetypes": ["go"]
+    },
+    "python": {
+	"command": "pyls",
+	"filetypes": ["python"]
+    },
+    "ruby": {
+	"command": "solargraph",
+	"args": ["stdio"],
+	"filetypes": ["ruby"]
+    },
     "terraform": {
       "command": "terraform-lsp",
       "filetypes": ["tf", "terraform"],

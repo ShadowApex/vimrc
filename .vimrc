@@ -22,8 +22,9 @@
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
         Plug 'scrooloose/nerdtree'
+        Plug 'nathanaelkane/vim-indent-guides'
         " Completion Engine
-        Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
         " File Completion/Search
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         Plug 'junegunn/fzf.vim'
@@ -38,11 +39,11 @@
         " Puppet
         Plug 'rodjek/vim-puppet'
         " Linters
-        Plug 'w0rp/ale'
+        "Plug 'w0rp/ale'
         " Formatters
         Plug 'sbdchd/neoformat'
         " Insert bracks/parens in pairs
-        Plug 'raimondi/delimitmate'
+        "Plug 'raimondi/delimitmate'
         " Git
         Plug 'airblade/vim-gitgutter'
         Plug 'tpope/vim-fugitive'
@@ -93,6 +94,7 @@
     " Always show the signcolumn, otherwise it would shift the text each time
     " diagnostics appear/become resolved.
     set signcolumn=yes
+
 "}
 
 " Edit {
@@ -127,6 +129,12 @@
     " Indent same level as previous line
     set smartindent
     set autoindent
+
+    " Add indentation lines on startup
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_auto_colors = 0
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#242632 ctermbg=3
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#262834 ctermbg=4
 
     " C/C++
     autocmd FileType cpp setlocal shiftwidth=2 softtabstop=2 expandtab
