@@ -38,6 +38,8 @@
         " Golang
         Plug 'sebdah/vim-delve'
         Plug 'ncm2/ncm2-go'
+        " GDScript
+        Plug 'calviken/vim-gdscript3'
         " Javascript/Typescript
         Plug 'ncm2/ncm2-cssomni'
         Plug 'ncm2/ncm2-tern', {'do': 'npm install'}
@@ -218,6 +220,16 @@
                     \ 'whitelist': ['go'],
                     \ })
             endif
+        " }
+        
+        " gdscript {
+        "    languageserver: {
+        "      godot: {
+        "        host: 127.0.0.1,
+        "        filetypes: [gd, gdscript3],
+        "        port: 6008
+        "      }
+        "    }
         " }
 
         " docker {
