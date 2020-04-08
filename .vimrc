@@ -17,7 +17,7 @@
 " Load Plugins {
     call plug#begin()
         " Colors    
-        Plug 'dracula/vim'
+        Plug 'dracula/vim', { 'as': 'dracula' }
         " Look and Feel
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
