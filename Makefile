@@ -8,6 +8,7 @@ endif
 
 # List of packages that need to be installed
 UBUNTU_PKGS := neovim git npm python-pip python3-pip curl
+DARWIN_PKGS := neovim git npm curl
 PIP_PKGS    := pynvim
 PIP3_PKGS   := pynvim
 NPM_PKGS    := neovim n yarn
@@ -21,9 +22,6 @@ COC_PLUGINS := coc-json coc-highlight coc-python coc-tag coc-neco \
 define install_Ubuntu
 	sudo add-apt-repository -y ppa:neovim-ppa/unstable
 	sudo apt install -y $(UBUNTU_PKGS)
-	sudo pip install $(PIP_PKGS)
-	sudo pip3 install $(PIP3_PKGS)
-	sudo npm install -g $(NPM_PKGS)
 
 	# Set NeoVim as the default editor
 	sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
@@ -34,10 +32,20 @@ define install_Ubuntu
 	sudo update-alternatives --config editor --skip-auto
 endef
 
+# Setup function for Mac OSX
+define install_Darwin
+	brew install $(DARWIN_PKGS)
+endef
+
 # Install will install the vimrc configuration and its plugins.
 install:
 	$(call install_$(OS_DIST))
 	
+	# Install specific packages
+	sudo pip install $(PIP_PKGS)
+	sudo pip3 install $(PIP3_PKGS)
+	sudo npm install -g $(NPM_PKGS)
+
 	# Install Node.js
 	sudo n lts
 
