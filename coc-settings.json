@@ -1,0 +1,45 @@
+{
+  "codeLens.enable": true,
+  "diagnostic.errorSign": "●",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.infoSign": "⚬",
+  "languageserver": {
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
+    },
+    "clangd": {
+      "command": "clangd",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "args": ["-background-index"]
+    },
+    "css": {
+      "command": "css-languageserver",
+      "args": ["--stdio"],
+      "filetypes": ["css", "less", "sass"]
+    },
+    "docker": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    },
+    "godot": {
+    	"host": "127.0.0.1",
+	"filetypes": ["gd", "gdscript3"],
+	"port": 6008
+    },
+    "terraform": {
+      "command": "terraform-lsp",
+      "filetypes": ["tf", "terraform"],
+      "initializationOptions": {}
+    },
+    "yaml": {
+    	"command": "yaml-language-server",
+	"filetypes": ["yaml", "yml"],
+	"args": ["--stdio"]
+    }
+  }
+}

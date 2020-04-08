@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Get the running script's base directory
 baseDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
