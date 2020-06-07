@@ -31,7 +31,7 @@
         " Golang
         Plug 'sebdah/vim-delve'
         " GDScript
-        Plug 'calviken/vim-gdscript3'
+        Plug 'clktmr/vim-gdscript3'
         " Kubernetes
         Plug 'towolf/vim-helm'
         " Terraform
