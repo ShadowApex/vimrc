@@ -8,6 +8,7 @@ endif
 
 # List of packages that need to be installed
 UBUNTU_PKGS := neovim git npm python-pip python3-pip curl
+ARCH_PKGS   := neovim python-pynvim git npm python-pip curl
 DARWIN_PKGS := neovim git npm curl
 PIP_PKGS    := pynvim
 PIP3_PKGS   := pynvim
@@ -30,6 +31,11 @@ define install_Ubuntu
 	sudo update-alternatives --config vim --skip-auto
 	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 	sudo update-alternatives --config editor --skip-auto
+endef
+
+# Setup function for Arch
+define install_Arch
+	sudo pacman -S --noconfirm $(ARCH_PKGS)
 endef
 
 # Setup function for Mac OSX
@@ -59,10 +65,10 @@ install:
 	ln -s "$(PWD)/coc-settings.json" $(HOME)/.config/nvim/coc-settings.json
 
 	# Install vim plugins
-	vim +PlugInstall +qall
+	nvim +PlugInstall +qall
 
 	# Install coc plugins
-	vim -c "CocInstall -sync $(COC_PLUGINS)|q"
+	nvim -c "CocInstall -sync $(COC_PLUGINS)|q"
 
 update:
 	vim +PlugInstall +PlugUpdate +PlugUpgrade +qall
