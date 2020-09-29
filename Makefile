@@ -21,6 +21,7 @@ COC_PLUGINS := coc-json coc-highlight coc-tag coc-pairs \
 
 # Setup function for Ubuntu
 define install_Ubuntu
+	sudo apt-get install -y software-properties-common
 	sudo add-apt-repository -y ppa:neovim-ppa/unstable
 	sudo apt install -y $(UBUNTU_PKGS)
 
@@ -31,6 +32,11 @@ define install_Ubuntu
 	sudo update-alternatives --config vim --skip-auto
 	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 	sudo update-alternatives --config editor --skip-auto
+endef
+
+# Setup function for Elementry
+define install_elementary
+	$(call install_Ubuntu)
 endef
 
 # Setup function for Arch
