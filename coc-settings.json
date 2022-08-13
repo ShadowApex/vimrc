@@ -4,18 +4,6 @@
   "diagnostic.warningSign": "⚠",
   "diagnostic.infoSign": "⚬",
   "languageserver": {
-    "bash": {
-      "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
-    },
-    "clangd": {
-      "command": "clangd",
-      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
-      "filetypes": ["c", "cpp", "objc", "objcpp"],
-      "args": ["-background-index"]
-    },
     "css": {
       "command": "css-languageserver",
       "args": ["--stdio"],
@@ -26,18 +14,6 @@
       "filetypes": ["dockerfile"],
       "args": ["--stdio"]
     },
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": true
-      }
-    },
-    "python": {
-	"command": "pyls",
-	"filetypes": ["python"]
-    },
     "ruby": {
 	"command": "solargraph",
 	"args": ["stdio"],
@@ -47,11 +23,6 @@
       "command": "terraform-lsp",
       "filetypes": ["tf", "terraform"],
       "initializationOptions": {}
-    },
-    "yaml": {
-    	"command": "yaml-language-server",
-	"filetypes": ["yaml", "yml"],
-	"args": ["--stdio"]
     }
   }
 }
