@@ -24,6 +24,7 @@
         Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'nathanaelkane/vim-indent-guides'
         Plug 'ryanoasis/vim-devicons'
+        Plug 'isobit/vim-caddyfile'
         " Completion Engine
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         " File Completion/Search
@@ -53,8 +54,16 @@
         Plug 'mg979/vim-visual-multi', {'branch': 'master'}
         " Change into a project root
         Plug 'airblade/vim-rooter'
+        " Debugger
+        Plug 'puremourning/vimspector'
         " Shortcut discovery
         Plug 'sunaku/vim-shortcut'
+        " JSONnet
+        Plug 'google/vim-jsonnet'
+        " Logs
+        Plug 'mtdl9/vim-log-highlighting'
+        " Kitty config
+        Plug 'fladson/vim-kitty'
     call plug#end()
 "}
 
@@ -101,7 +110,9 @@
 
 " Edit {
     " Undo and swap location
-    set undolevels=1000 " Lots of undo
+    set undolevels=2000 " Lots of undo
+    set undodir=$HOME/.vim/undo
+    set undofile " Maintain undo history between sessions
     set directory=$HOME/.vim/swapfiles//
 
     " Clipboard {
@@ -226,6 +237,10 @@
                     autocmd BufWritePre *.js :silent Neoformat
                 augroup END
             endif
+        " }
+
+        " typescript {
+            let g:neoformat_enabled_typescript = ['prettier']
         " }
     " }
 
@@ -360,6 +375,29 @@
             \ nmap <Leader>t :DlvToggleBreakpoint<CR>
     " }
 
+    " Vimspector {
+        Shortcut [Vimspector] launch debugger
+            \ nnoremap <Leader>dd :call vimspector#Launch()<CR>
+        Shortcut [Vimspector] reset debugger
+            \ nnoremap <Leader>de :call vimspector#Reset()<CR>
+        Shortcut [Vimspector] continue debugger
+            \ nnoremap <Leader>dc :call vimspector#Continue()<CR>
+        
+        Shortcut [Vimspector] toggle debugger breakpoint
+            \ nnoremap <Leader>dt :call vimspector#ToggleBreakpoint()<CR>
+        Shortcut [Vimspector] clear debugger breakpoints
+            \ nnoremap <Leader>dT :call vimspector#ClearBreakpoints()<CR>
+        
+        Shortcut [Vimspector] restart debugger
+            \ nmap <Leader>dk <Plug>VimspectorRestart
+        Shortcut [Vimspector] step out of debug function
+            \ nmap <Leader>dh <Plug>VimspectorStepOut
+        Shortcut [Vimspector] step into function during debugging
+            \ nmap <Leader>dl <Plug>VimspectorStepInto
+        Shortcut [Vimspector] step over function during debugging
+            \ nmap <Leader>dj <Plug>VimspectorStepOver
+    " }
+
     " coc.nvim {
         " Use `[g` and `]g` to navigate diagnostics
         " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -377,6 +415,8 @@
             \ nmap <silent> gi <Plug>(coc-implementation)
         Shortcut [coc.vim] go to references
             \ nmap <silent> gr <Plug>(coc-references)
+        Shortcut [coc.vim] pop back if inside a definition
+            \ nnoremap gb <C-O>  " pop back if we're inside a def
         
         " Use K to show documentation in preview window.
         Shortcut [coc.vim] show/lookup documentation in preview window
