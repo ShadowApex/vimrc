@@ -68,7 +68,7 @@ install:
 	rm -rf "$(HOME)/.config/nvim/coc-settings.json"
 	ln -s "$(PWD)/.vimrc" $(HOME)/.vimrc
 	ln -s "$(PWD)/.vimrc" $(HOME)/.config/nvim/init.vim
-	ln -s "$(PWD)/coc-settings.json" $(HOME)/.config/nvim/coc-settings.json
+	ln -s "$(PWD)/lua" $(HOME)/.config/nvim/lua
 
 	# Install vim plugins
 	nvim +PlugInstall +qall
