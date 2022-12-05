@@ -27,6 +27,7 @@
         Plug 'hrsh7th/cmp-path'
         Plug 'hrsh7th/cmp-cmdline'
         Plug 'hrsh7th/nvim-cmp'
+        Plug 'ray-x/lsp_signature.nvim'
         " Snippets
         Plug 'hrsh7th/cmp-vsnip'
         Plug 'hrsh7th/vim-vsnip'
@@ -41,14 +42,16 @@
         " Look and Feel
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
-        Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-        Plug 'nathanaelkane/vim-indent-guides'
-        "Plug 'ryanoasis/vim-devicons'
         Plug 'nvim-tree/nvim-web-devicons'
+        Plug 'nvim-tree/nvim-tree.lua'
+        Plug 'nathanaelkane/vim-indent-guides'
         Plug 'onsails/lspkind.nvim'
+        Plug 'RRethy/vim-illuminate'
+        Plug 'https://github.com/adelarsq/image_preview.nvim'
         " File Completion/Search
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         Plug 'junegunn/fzf.vim'
+        Plug 'nvim-lua/plenary.nvim'
         " Golang
         Plug 'sebdah/vim-delve'
         " Kubernetes
@@ -62,11 +65,13 @@
         " Formatters
         Plug 'sbdchd/neoformat'
         " Insert bracks/parens in pairs
-        Plug 'raimondi/delimitmate'
+        Plug 'm4xshen/autoclose.nvim'
         " Git
-        Plug 'airblade/vim-gitgutter'
+        "Plug 'airblade/vim-gitgutter'
+        Plug 'lewis6991/gitsigns.nvim'
         Plug 'tpope/vim-fugitive'
         Plug 'junegunn/gv.vim'
+        Plug 'sindrets/diffview.nvim'
         " Multi-cursor
         Plug 'mg979/vim-visual-multi', {'branch': 'master'}
         " Change into a project root
@@ -218,6 +223,10 @@
         :lua require('nvim-web-devicons').setup()
     " }    
 
+    " gitsigns.nvim {
+        :lua require('gitsigns').setup()
+    " }
+
     " vim-delve {
         let g:delve_new_command = 'enew'
     " }
@@ -277,23 +286,19 @@
         end
     " }
 
-    " NERDTree {
-        " Automatically show NERDTree if no files are specified when
-        " launching vim 
-        if !exists("g:gui_oni")
-            autocmd StdinReadPre * let s:std_in=1
-            autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-            set splitright
-
-            " Case-sensitive sorting
-            let g:NERDTreeCaseSensitiveSort = 1
-        endif
+    " nvim-tree {
+        :lua require('nvim-tree').setup()
+        :lua require("image_preview").setup({})
     " }
 
     " nvim-cmp {
         set completeopt=menu,menuone,noselect
         :lua require('plugins/lsp')
         :lua require('plugins/nvim-cmp')
+    " }
+
+    " lsp-signature.nvim {
+        :lua require('lsp_signature').setup()
     " }
 
     " mason {
@@ -325,6 +330,8 @@
             \ nmap <silent> gT :bp<cr>
         Shortcut [tabs] close current tab/buffer
             \ nmap <silent> gq :bd<cr>
+        Shortcut [general] open a file 
+            \ nmap <C-o> :e ./<cr>
     " }
 
     " FZF {
@@ -347,15 +354,20 @@
             \ nnoremap <leader>fm :Neoformat<CR>
     " }
 
-    " NERDTree {
-        Shortcut [NERDTree] toggle nerd tree file browser
-            \ map <F2> :NERDTreeToggle<CR>
+    " Nvim-tree {
+        Shortcut [nvim-tree] toggle tree file browser
+            \ map <F2> :NvimTreeToggle<CR>
     " }
 
     " Golang {
         " Use '\t' to toggle breakpoint 
         au FileType go Shortcut [delve] toggle breakpoint
             \ nmap <Leader>t :DlvToggleBreakpoint<CR>
+    " }
+
+    " Mason {
+        Shortcut [Mason] manage and install lsp servers and linsters
+            \ nmap <silent> <Leader>M <cmd>Mason<CR>
     " }
 
     " LspSaga {
@@ -380,6 +392,8 @@
             \ noremap <silent> ]d <cmd>Lspsaga diagnostic_jump_next<CR>
         Shortcut [lspsaga] go to previous diagnostic error
             \ noremap <silent> [d <cmd>Lspsaga diagnostic_jump_prev<CR>
+        Shortcut [trouble] open diagnostics window
+            \ noremap <silent> <Leader>d :TroubleToggle<CR>
 
         " Launch a bash terminal
         Shortcut [shell] launch a bash terminal
@@ -389,10 +403,6 @@
 
     " Neovim LSP {
     " https://github.com/neovim/nvim-lspconfig#keybindings-and-completion
-        " Use `[d` and `]d` to navigate diagnostics
-        Shortcut [neovim-lsp] open diagnostics window
-            \ noremap <silent> <Leader>d :lua vim.diagnostic.setloclist()<CR>
-
         " GoTo code navigation.
         Shortcut [neovim-lsp] go to definition
             \ nmap <silent> gd :lua vim.lsp.buf.definition()<CR>
