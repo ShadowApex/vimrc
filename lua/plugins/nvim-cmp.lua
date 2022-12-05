@@ -127,6 +127,9 @@ require('lspconfig')['marksman'].setup {
 require('lspconfig')['pyright'].setup {
   capabilities = capabilities
 }
-require('lspconfig')['gdscript'].setup {
+require('lspconfig')['bashls'].setup {
   capabilities = capabilities
 }
+-- require('lspconfig')['gdscript'].setup {
+--   capabilities = capabilities
+-- }
