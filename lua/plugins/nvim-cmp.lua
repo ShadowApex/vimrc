@@ -11,6 +11,9 @@ end
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 cmp.setup({
+  experimental = {
+    ghost_text = true
+  },
   formatting = {
     format = lspkind.cmp_format()
   },
@@ -124,12 +127,12 @@ require('lspconfig')['dockerls'].setup {
 require('lspconfig')['marksman'].setup {
   capabilities = capabilities
 }
-require('lspconfig')['pyright'].setup {
+require('lspconfig')['pylsp'].setup {
   capabilities = capabilities
 }
 require('lspconfig')['bashls'].setup {
   capabilities = capabilities
 }
--- require('lspconfig')['gdscript'].setup {
---   capabilities = capabilities
--- }
+require('lspconfig')['gdscript'].setup {
+  capabilities = capabilities
+}

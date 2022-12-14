@@ -6,10 +6,9 @@ col=$3
 echo "Opening $file:$line:$col"
 if [ ! -S $PIPE ]; then
 	echo "No neovim server running. Starting one."
-	/usr/bin/neovide -- --listen $PIPE
-	# Workaround some shit
+	wezterm start nvim --listen $PIPE
+	#kitty --detach nvim --listen $PIPE
 	sleep 1
-	nvim --server $PIPE --remote-send '<F2><CR>'
 fi
 echo "Sending command"
 nvim --server $PIPE --remote-send ':e '$file'<CR>'

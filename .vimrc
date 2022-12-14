@@ -28,6 +28,7 @@
         Plug 'hrsh7th/cmp-cmdline'
         Plug 'hrsh7th/nvim-cmp'
         Plug 'ray-x/lsp_signature.nvim'
+        Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
         " Snippets
         Plug 'hrsh7th/cmp-vsnip'
         Plug 'hrsh7th/vim-vsnip'
@@ -38,10 +39,13 @@
         Plug 'folke/trouble.nvim'
         Plug 'glepnir/lspsaga.nvim'
         " Colors    
-        Plug 'dracula/vim', { 'as': 'dracula' }
+        "Plug 'dracula/vim', { 'as': 'dracula' }
+        Plug 'Mofiqul/dracula.nvim'
         " Look and Feel
-        Plug 'vim-airline/vim-airline'
-        Plug 'vim-airline/vim-airline-themes'
+        Plug 'feline-nvim/feline.nvim'
+        Plug 'romgrk/barbar.nvim'
+        "Plug 'vim-airline/vim-airline'
+        "Plug 'vim-airline/vim-airline-themes'
         Plug 'nvim-tree/nvim-web-devicons'
         Plug 'nvim-tree/nvim-tree.lua'
         Plug 'nathanaelkane/vim-indent-guides'
@@ -52,6 +56,7 @@
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         Plug 'junegunn/fzf.vim'
         Plug 'nvim-lua/plenary.nvim'
+        Plug 'ggandor/leap.nvim'
         " Golang
         Plug 'sebdah/vim-delve'
         " Kubernetes
@@ -65,7 +70,8 @@
         " Formatters
         Plug 'sbdchd/neoformat'
         " Insert bracks/parens in pairs
-        Plug 'm4xshen/autoclose.nvim'
+        ""Plug 'm4xshen/autoclose.nvim'
+        Plug 'jiangmiao/auto-pairs'
         " Git
         "Plug 'airblade/vim-gitgutter'
         Plug 'lewis6991/gitsigns.nvim'
@@ -128,8 +134,8 @@
     set nobackup
     set nowritebackup
     
-    " Give more space for displaying messages.
-    "set cmdheight=2
+    " Give NO space for displaying messages.
+    set cmdheight=1
     
     " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
     " delays and poor user experience.
@@ -201,6 +207,8 @@
 
     " YAML
     autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType lua setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
 
     " Typescript
     autocmd FileType typescript setlocal ts=2 sts=2 sw=2 expandtab
@@ -208,6 +216,8 @@
 " }
 
 " Look and Feel {
+    :lua require('dracula').setup()
+
     " Use the 'dracula' color scheme
     colorscheme dracula
 
@@ -216,13 +226,31 @@
 	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
     " airline {
-        let g:airline_theme = 'dracula'
-        let g:airline#extensions#tabline#enabled = 1  " Disable for large files
-        let g:airline_powerline_fonts = 1
-        set laststatus=2
-        " Show terminal buffers
-        let g:airline#extensions#tabline#ignore_bufadd_pat = 'defx|gundo|nerd_tree|startify|tagbar|undotree|vimfiler'
+    "    let g:airline_theme = 'dracula'
+    "    let g:airline#extensions#tabline#enabled = 1  " Disable for large files
+    "    let g:airline_powerline_fonts = 1
+    "    set laststatus=2
+    "    " Show terminal buffers
+    "    let g:airline#extensions#tabline#ignore_bufadd_pat = 'defx|gundo|nerd_tree|startify|tagbar|undotree|vimfiler'
     " }
+
+    " feline {
+        :lua require('plugins/feline')
+        "set laststatus=2
+    " }
+
+    " barbar {
+        :lua require('bufferline').setup()
+        " NOTE: If barbar's option dict isn't created yet, create it
+        let bufferline = get(g:, 'bufferline', {})
+        " Configure icons on the bufferline. █     ▎
+        let bufferline.icon_separator_active = '▎'
+        let bufferline.icon_separator_inactive = '▎'
+        let bufferline.icon_close_tab = '𝗑'
+        let bufferline.icon_close_tab_modified = '●'
+        let bufferline.icon_pinned = '車'
+    " }
+
 
 	" Enable mouse support
 	set mouse=a
@@ -323,6 +351,14 @@
     " trouble.nvim {
         :lua require('trouble').setup()
         :lua require('plugins/lspsaga')
+    " }
+
+    " treesitter {
+        :lua require('nvim-treesitter.configs').setup { ensure_installed = "all", highlight = { enable = true } }
+    " }
+    "
+    " leap {
+        :lua require('leap').add_default_mappings()
     " }
 " }
 
