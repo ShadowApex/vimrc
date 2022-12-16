@@ -14,10 +14,6 @@
     endif
 " }
 
-" Maybe?
-" https://github.com/glepnir/lspsaga.nvim 
-" https://github.com/folke/trouble.nvim
-
 " Load Plugins {
     call plug#begin()
         " Completion Engine
@@ -29,6 +25,7 @@
         Plug 'hrsh7th/nvim-cmp'
         Plug 'ray-x/lsp_signature.nvim'
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+        Plug 'folke/twilight.nvim'
         " Snippets
         Plug 'hrsh7th/cmp-vsnip'
         Plug 'hrsh7th/vim-vsnip'
@@ -39,13 +36,11 @@
         Plug 'folke/trouble.nvim'
         Plug 'glepnir/lspsaga.nvim'
         " Colors    
-        "Plug 'dracula/vim', { 'as': 'dracula' }
         Plug 'Mofiqul/dracula.nvim'
         " Look and Feel
         Plug 'feline-nvim/feline.nvim'
         Plug 'romgrk/barbar.nvim'
-        "Plug 'vim-airline/vim-airline'
-        "Plug 'vim-airline/vim-airline-themes'
+        Plug 'rcarriga/nvim-notify'
         Plug 'nvim-tree/nvim-web-devicons'
         Plug 'nvim-tree/nvim-tree.lua'
         Plug 'nathanaelkane/vim-indent-guides'
@@ -70,7 +65,6 @@
         " Formatters
         Plug 'sbdchd/neoformat'
         " Insert bracks/parens in pairs
-        ""Plug 'm4xshen/autoclose.nvim'
         Plug 'jiangmiao/auto-pairs'
         " Git
         "Plug 'airblade/vim-gitgutter'
@@ -225,13 +219,16 @@
     set termguicolors
 	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-    " airline {
-    "    let g:airline_theme = 'dracula'
-    "    let g:airline#extensions#tabline#enabled = 1  " Disable for large files
-    "    let g:airline_powerline_fonts = 1
-    "    set laststatus=2
-    "    " Show terminal buffers
-    "    let g:airline#extensions#tabline#ignore_bufadd_pat = 'defx|gundo|nerd_tree|startify|tagbar|undotree|vimfiler'
+    " notify {
+        :lua require("notify").setup()
+        :lua vim.notify = require("notify")
+        " icons = {
+        "   ERROR = "",
+        "   WARN = "",
+        "   INFO = "",
+        "   DEBUG = "",
+        "   TRACE = "✎",
+        " },
     " }
 
     " feline {
@@ -263,6 +260,10 @@
 
     " gitsigns.nvim {
         :lua require('gitsigns').setup()
+    " }
+
+    " twilight {
+        :lua require("twilight").setup()
     " }
 
     " vim-delve {
@@ -418,6 +419,11 @@
     " Mason {
         Shortcut [Mason] manage and install lsp servers and linsters
             \ nmap <silent> <Leader>M <cmd>Mason<CR>
+    " }
+
+    " Twilight {
+        Shortcut [twilight] highlight the current code context
+            \ nmap <silent> <Leader>c <cmd>Twilight<CR>
     " }
 
     " LspSaga {

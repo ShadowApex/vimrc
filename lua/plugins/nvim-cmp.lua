@@ -118,6 +118,9 @@ require('lspconfig')['rust_analyzer'].setup {
 require('lspconfig')['jsonls'].setup {
   capabilities = capabilities
 }
+require('lspconfig')['eslint'].setup {
+  capabilities = capabilities
+}
 require('lspconfig')['yamlls'].setup {
   capabilities = capabilities
 }
