@@ -100,9 +100,6 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('lspconfig')['vimls'].setup {
   capabilities = capabilities
 }
-require('lspconfig')['sumneko_lua'].setup {
-  capabilities = capabilities
-}
 require('lspconfig')['clangd'].setup {
   capabilities = capabilities
 }
