@@ -26,6 +26,7 @@
         Plug 'ray-x/lsp_signature.nvim'
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
         Plug 'folke/twilight.nvim'
+        Plug 'habamax/vim-godot'
         " Snippets
         Plug 'hrsh7th/cmp-vsnip'
         Plug 'hrsh7th/vim-vsnip'
@@ -283,6 +284,13 @@
         let g:neoformat_enabled_python = ['black', 'docformatter']
 
         let g:neoformat_enabled_go = ['gofmt']
+
+        let g:neoformat_rust_rustfmt = {
+                    \ 'exe': 'rustfmt',
+                    \ 'args': ['--edition', '2021'],
+                    \ 'stdin': 1,
+                    \ }
+        let g:neoformat_enabled_rust = ['rustfmt']
 
         " Define the formatter function to run.
         fun! RunFormatter()
